@@ -6,7 +6,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/bankdb
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: postgres
+    password: k3k3a1
   jpa:
     hibernate:
       ddl-auto: validate
