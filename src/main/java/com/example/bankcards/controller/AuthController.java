@@ -1,5 +1,6 @@
 package com.example.bankcards.controller;
 
+import com.example.bankcards.dto.UserDto;
 import com.example.bankcards.entity.Role;
 import com.example.bankcards.entity.User;
 import com.example.bankcards.security.JwtTokenProvider;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -42,11 +44,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestParam String username,
-                                      @RequestParam String password) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserDto dto) {
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         userService.save(user);
         return ResponseEntity.ok().build();
