@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * Configures Spring Security filters and authentication manager.
+ * Конфигурирует фильтры Spring Security и менеджер аутентификации.
  */
 @Configuration
 @EnableMethodSecurity

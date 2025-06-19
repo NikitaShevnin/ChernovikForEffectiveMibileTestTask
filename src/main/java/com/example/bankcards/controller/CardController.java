@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Controller for card related API endpoints.
+ * Контроллер для работы с API, связанным с картами.
  */
 @RestController
 @RequestMapping("/api/cards")

@@ -4,7 +4,7 @@ import com.example.bankcards.entity.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Repository for performing CRUD operations on {@link Card} entities.
+ * Репозиторий для выполнения CRUD-операций над сущностями {@link Card}.
  */
 
 public interface CardRepository extends JpaRepository<Card, Long> {

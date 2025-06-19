@@ -1,7 +1,7 @@
 package com.example.bankcards.entity;
 
 /**
- * Possible statuses for a bank card.
+ * Возможные статусы банковской карты.
  */
 public enum CardStatus {
     ACTIVE,

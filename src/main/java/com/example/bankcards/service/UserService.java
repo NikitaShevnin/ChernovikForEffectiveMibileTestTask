@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * Service for persisting and retrieving application users.
+ * Сервис для сохранения и получения пользователей приложения.
  */
 @Service
 @RequiredArgsConstructor

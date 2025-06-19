@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 /**
- * Repository for {@link User} entities.
+ * Репозиторий для сущностей {@link User}.
  */
 
 public interface UserRepository extends JpaRepository<User, Long> {

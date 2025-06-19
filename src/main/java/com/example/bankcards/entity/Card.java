@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 /**
- * Entity representing a bank card owned by a user.
+ * Сущность банковской карты, принадлежащей пользователю.
  */
 @Entity
 @Table(name = "cards")

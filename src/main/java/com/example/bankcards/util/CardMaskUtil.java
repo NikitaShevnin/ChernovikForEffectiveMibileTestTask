@@ -1,7 +1,7 @@
 package com.example.bankcards.util;
 
 /**
- * Utility class for masking sensitive card numbers.
+ * Утилита для маскирования номеров банковских карт.
  */
 public class CardMaskUtil {
     public static String mask(String number) {

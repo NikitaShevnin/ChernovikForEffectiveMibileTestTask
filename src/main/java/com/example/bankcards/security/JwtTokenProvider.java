@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * Utility component used for generating and parsing JWT tokens.
+ * Утилитный компонент для генерации и разбора JWT-токенов.
  */
 @Component
 public class JwtTokenProvider {

@@ -15,8 +15,8 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * REST controller that exposes authentication endpoints for login and
- * registration of users.
+ * REST-контроллер, предоставляющий точки входа для аутентификации и
+ * регистрации пользователей.
  */
 @RestController
 @RequestMapping("/api/auth")
