@@ -32,3 +32,101 @@ paths:
       responses:
         "200":
           description: Карта создана
+  /api/cards/my:
+    get:
+      summary: Список карт пользователя
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: size
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Список карт пользователя
+  /api/cards/{id}/balance:
+    get:
+      summary: Баланс карты
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Баланс
+  /api/cards/{id}/deposit:
+    post:
+      summary: Пополнение карты
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Баланс обновлен
+  /api/cards/{id}/withdraw:
+    post:
+      summary: Снятие с карты
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Баланс обновлен
+  /api/cards/{id}/block:
+    post:
+      summary: Блокировка карты
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Карта заблокирована
+  /api/cards/transfer:
+    post:
+      summary: Перевод между картами пользователя
+      responses:
+        "200":
+          description: Перевод выполнен
+  /api/users:
+    post:
+      summary: Создать пользователя
+      responses:
+        "200":
+          description: Пользователь создан
+  /api/users/{id}:
+    put:
+      summary: Обновить пользователя
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Пользователь обновлен
+    delete:
+      summary: Удалить пользователя
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Пользователь удален
