@@ -10,6 +10,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity that represents an application user.
+ */
 @Entity
 @Table(name = "users")
 public class User {

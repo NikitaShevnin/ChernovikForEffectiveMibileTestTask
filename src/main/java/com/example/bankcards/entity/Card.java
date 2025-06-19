@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing a bank card owned by a user.
+ */
 @Entity
 @Table(name = "cards")
 public class Card {

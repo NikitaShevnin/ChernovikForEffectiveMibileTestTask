@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
+/**
+ * Handles application exceptions and converts them to HTTP responses.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

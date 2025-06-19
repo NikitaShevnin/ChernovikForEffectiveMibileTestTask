@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Business service for working with cards in the database.
+ */
 @Service
 @RequiredArgsConstructor
 public class CardService {
