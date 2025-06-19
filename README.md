@@ -98,3 +98,16 @@
   <p>
     Java 17+, Spring Boot, Spring Security, Spring Data JPA, PostgreSQL/MySQL, Liquibase, Docker, JWT, Swagger (OpenAPI)
   </p>
+
+## 🚀 Запуск приложения
+
+1. Установите Docker и Docker Compose.
+2. Поднимите контейнер с PostgreSQL:
+   ```bash
+   docker-compose up -d
+   ```
+3. Запустите приложение командой:
+   ```bash
+   mvn spring-boot:run
+   ```
+4. После запуска документация API доступна по адресу [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
