@@ -15,6 +15,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * Servlet filter that authenticates users based on JWT tokens present in the request.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

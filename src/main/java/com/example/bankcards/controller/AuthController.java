@@ -4,7 +4,6 @@ import com.example.bankcards.entity.Role;
 import com.example.bankcards.entity.User;
 import com.example.bankcards.security.JwtTokenProvider;
 import com.example.bankcards.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,13 +14,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * REST controller that exposes authentication endpoints for login and
+ * registration of users.
+ */
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
     private final UserService userService;
+
+    public AuthController(AuthenticationManager authenticationManager,
+                          JwtTokenProvider tokenProvider,
+                          UserService userService) {
+        this.authenticationManager = authenticationManager;
+        this.tokenProvider = tokenProvider;
+        this.userService = userService;
+    }
 
     @PostMapping("/login")
     public Map<String, String> login(@RequestParam String username, @RequestParam String password) {
@@ -32,12 +42,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestParam String username, @RequestParam String password) {
-        User user = User.builder()
-                .username(username)
-                .password(password)
-                .roles(Collections.singleton(Role.ROLE_USER))
-                .build();
+    public ResponseEntity<?> register(@RequestParam String username,
+                                      @RequestParam String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
         userService.save(user);
         return ResponseEntity.ok().build();
     }
