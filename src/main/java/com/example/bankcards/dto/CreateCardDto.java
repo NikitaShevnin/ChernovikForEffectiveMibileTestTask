@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
- * DTO for creating cards by admin.
+ * DTO для создания карты администратором.
  */
 public class CreateCardDto {
     @NotBlank

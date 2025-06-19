@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
- * DTO for card to card transfers.
+ * DTO для переводов между картами.
  */
 public class TransferDto {
     @NotNull

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 /**
- * Controller for user management (update/delete).
+ * Контроллер управления пользователями (обновление/удаление).
  */
 @RestController
 @RequestMapping("/api/users")
