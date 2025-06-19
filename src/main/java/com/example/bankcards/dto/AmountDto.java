@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
- * DTO for amount operations like deposit/withdraw.
+ * DTO для операций с суммой (пополнение/снятие).
  */
 public class AmountDto {
     @NotNull

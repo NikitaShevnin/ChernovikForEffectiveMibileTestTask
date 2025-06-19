@@ -3,7 +3,7 @@ package com.example.bankcards.dto;
 import jakarta.validation.constraints.NotBlank;
 
 /**
- * DTO for user registration and update.
+ * DTO регистрации и обновления пользователя.
  */
 public class UserDto {
     private Long id;
