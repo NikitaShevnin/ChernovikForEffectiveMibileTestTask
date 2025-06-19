@@ -2,7 +2,6 @@ package com.example.bankcards.security;
 
 import com.example.bankcards.entity.User;
 import com.example.bankcards.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +14,13 @@ import java.util.stream.Collectors;
  * Реализация {@link UserDetailsService}, загружающая пользователей из базы данных.
  */
 @Service
-@RequiredArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
+
+    public AppUserDetailsService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,15 +1,10 @@
 package com.example.bankcards.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import java.util.Objects;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 /**
  * Сущность банковской карты, принадлежащей пользователю.
  */
@@ -35,4 +30,64 @@ public class Card {
 
     @Column(nullable = false)
     private BigDecimal balance;
+
+    public Card() {
+    }
+
+    public Card(Long id, String number, User owner, String expiry, CardStatus status, BigDecimal balance) {
+        this.id = id;
+        this.number = number;
+        this.owner = owner;
+        this.expiry = expiry;
+        this.status = status;
+        this.balance = balance;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public String getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(String expiry) {
+        this.expiry = expiry;
+    }
+
+    public CardStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CardStatus status) {
+        this.status = status;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 }
