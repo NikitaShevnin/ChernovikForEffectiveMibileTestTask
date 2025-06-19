@@ -1,7 +1,7 @@
 package com.example.bankcards.exception;
 
 /**
- * Simple DTO used to return error information in API responses.
+ * Простой DTO-объект для передачи информации об ошибке в ответах API.
  */
 
 import java.time.LocalDateTime;

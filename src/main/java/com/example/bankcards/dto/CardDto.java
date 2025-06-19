@@ -5,7 +5,7 @@ import com.example.bankcards.entity.Card;
 import java.math.BigDecimal;
 
 /**
- * Data transfer object for the {@link com.example.bankcards.entity.Card} entity.
+ * DTO для сущности {@link com.example.bankcards.entity.Card}.
  */
 public class CardDto {
     private Long id;

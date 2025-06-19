@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 /**
- * Handles application exceptions and converts them to HTTP responses.
+ * Обрабатывает исключения приложения и преобразует их в HTTP-ответы.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

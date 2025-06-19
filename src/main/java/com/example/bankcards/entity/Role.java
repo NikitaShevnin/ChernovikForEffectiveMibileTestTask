@@ -1,7 +1,7 @@
 package com.example.bankcards.entity;
 
 /**
- * Roles that can be assigned to an application user.
+ * Роли, которые могут быть назначены пользователю.
  */
 public enum Role {
     ROLE_USER,

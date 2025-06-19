@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Business service for working with cards in the database.
+ * Сервис для работы с карточками в базе данных.
  */
 @Service
 @RequiredArgsConstructor

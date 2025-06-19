@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 /**
- * Entity that represents an application user.
+ * Сущность, представляющая пользователя приложения.
  */
 @Entity
 @Table(name = "users")

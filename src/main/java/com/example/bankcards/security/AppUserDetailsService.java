@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link UserDetailsService} that loads users from the database.
+ * Реализация {@link UserDetailsService}, загружающая пользователей из базы данных.
  */
 @Service
 @RequiredArgsConstructor

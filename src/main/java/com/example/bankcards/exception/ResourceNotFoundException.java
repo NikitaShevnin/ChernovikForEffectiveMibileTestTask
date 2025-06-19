@@ -1,7 +1,7 @@
 package com.example.bankcards.exception;
 
 /**
- * Thrown when a requested resource is not found in the system.
+ * Исключение, выбрасываемое при отсутствии запрошенного ресурса в системе.
  */
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
