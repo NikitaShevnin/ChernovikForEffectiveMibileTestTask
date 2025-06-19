@@ -7,6 +7,7 @@ import com.example.bankcards.exception.ResourceNotFoundException;
 import com.example.bankcards.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -23,7 +24,16 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public java.util.List<UserDto> all() {
+        return userService.findAll().stream()
+                .map(UserDto::fromEntity)
+                .toList();
+    }
+
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> create(@Valid @RequestBody UserDto dto) {
         User user = new User();
         user.setUsername(dto.getUsername());
@@ -34,6 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UserDto dto) {
         User user = userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setUsername(dto.getUsername());
@@ -43,6 +54,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();

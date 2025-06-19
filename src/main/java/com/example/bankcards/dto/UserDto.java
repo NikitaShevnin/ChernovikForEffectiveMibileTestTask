@@ -12,6 +12,14 @@ public class UserDto {
     @NotBlank
     private String password;
 
+    public static UserDto fromEntity(com.example.bankcards.entity.User user) {
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setPassword(user.getPassword());
+        return dto;
+    }
+
     public Long getId() {
         return id;
     }

@@ -39,12 +39,21 @@ public class CardService {
         return cardRepository.findByIdAndOwnerUsername(id, username);
     }
 
+    public Optional<Card> findById(Long id) {
+        return cardRepository.findById(id);
+    }
+
     public Optional<Card> findByNumberAndOwner(String number, String username) {
         return cardRepository.findByNumberAndOwnerUsername(number, username);
     }
 
     public Card blockCard(Card card) {
         card.setStatus(CardStatus.BLOCKED);
+        return cardRepository.save(card);
+    }
+
+    public Card activateCard(Card card) {
+        card.setStatus(CardStatus.ACTIVE);
         return cardRepository.save(card);
     }
 
@@ -63,5 +72,9 @@ public class CardService {
         to.setBalance(to.getBalance().add(amount));
         cardRepository.save(from);
         cardRepository.save(to);
+    }
+
+    public void delete(Long id) {
+        cardRepository.deleteById(id);
     }
 }
