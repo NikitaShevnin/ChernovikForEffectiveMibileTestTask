@@ -32,6 +32,7 @@ public class CardController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public java.util.List<CardDto> all() {
         java.util.List<CardDto> list = cardService.findAll().stream()
                 .map(CardDto::fromEntity)
@@ -55,9 +56,11 @@ public class CardController {
 
     @GetMapping("/my")
     public Page<CardDto> myCards(@RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size) {
+                                 @RequestParam(defaultValue = "10") int size,
+                                 @RequestParam(required = false) String search) {
         String username = userService.getCurrentUser().orElseThrow(() -> new ResourceNotFoundException("User not found")).getUsername();
-        Page<CardDto> result = cardService.findByOwner(username, PageRequest.of(page, size))
+        Page<CardDto> result = cardService
+                .findByOwner(username, PageRequest.of(page, size), search)
                 .map(CardDto::fromEntity);
         return result;
     }

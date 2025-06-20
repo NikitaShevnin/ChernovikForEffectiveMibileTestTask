@@ -13,6 +13,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -130,5 +134,28 @@ class CardServiceTest {
         assertThrows(InsufficientFundsException.class,
                 () -> cardService.withdraw(card, BigDecimal.valueOf(5)));
         verify(cardRepository, never()).save(any());
+
+    void findByOwnerUsesSearchWhenProvided() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Card> page = new PageImpl<>(List.of(new Card()));
+        when(cardRepository.findByOwnerUsernameAndNumberContaining("u", "123", pageable))
+                .thenReturn(page);
+
+        Page<Card> result = cardService.findByOwner("u", pageable, "123");
+
+        verify(cardRepository).findByOwnerUsernameAndNumberContaining("u", "123", pageable);
+        assertEquals(page, result);
+    }
+
+    @Test
+    void findByOwnerWithoutSearchDelegatesSimpleQuery() {
+        Pageable pageable = PageRequest.of(0, 5);
+        Page<Card> page = new PageImpl<>(List.of(new Card()));
+        when(cardRepository.findByOwnerUsername("u", pageable)).thenReturn(page);
+
+        Page<Card> result = cardService.findByOwner("u", pageable, null);
+
+        verify(cardRepository).findByOwnerUsername("u", pageable);
+        assertEquals(page, result);
     }
 }
