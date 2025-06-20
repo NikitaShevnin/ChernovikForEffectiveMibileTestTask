@@ -1,6 +1,7 @@
 package com.example.bankcards.dto;
 
 import com.example.bankcards.entity.Card;
+import com.example.bankcards.util.CardMaskUtil;
 
 import java.math.BigDecimal;
 
@@ -17,7 +18,7 @@ public class CardDto {
     public static CardDto fromEntity(Card card) {
         CardDto dto = new CardDto();
         dto.setId(card.getId());
-        dto.setNumber(card.getNumber());
+        dto.setNumber(CardMaskUtil.mask(card.getNumber()));
         dto.setExpiry(card.getExpiry());
         dto.setStatus(card.getStatus().name());
         dto.setBalance(card.getBalance());

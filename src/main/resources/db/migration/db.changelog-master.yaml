@@ -79,3 +79,11 @@ databaseChangeLog:
             referencedTableName: users
             referencedColumnNames: id
             constraintName: fk_user_roles_users
+
+  - changeSet:
+      id: 2
+      author: encrypt
+      changes:
+        - sql: CREATE EXTENSION IF NOT EXISTS pgcrypto;
+        - sql: |
+            UPDATE cards SET number = encode(pgp_sym_encrypt(number, 'MySecretKey12345'), 'base64');
