@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * Aspect for logging execution of service and controller Spring components.
+ * Аспект регистрации выполнения сервисных и контроллерных Spring компонентов.
  */
 @Aspect
 @Component

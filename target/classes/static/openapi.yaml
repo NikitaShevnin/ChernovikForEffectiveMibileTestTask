@@ -21,6 +21,23 @@ paths:
       responses:
         "200":
           description: JWT токен
+  /api/auth/register:
+    post:
+      summary: Регистрация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Пользователь зарегистрирован
   /api/cards:
     get:
       summary: Получить все карты
