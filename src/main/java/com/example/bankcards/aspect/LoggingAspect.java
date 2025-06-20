@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * Аспект регистрации выполнения сервисных и контроллерных Spring компонентов.
+ * Аспект для логирования выполнения сервисных и контроллерных Spring для сервисов и контроллеров.
  */
 @Aspect
 @Component
@@ -20,7 +20,7 @@ public class LoggingAspect {
 
     @Pointcut("within(com.example.bankcards.controller..*) || within(com.example.bankcards.service..*)")
     public void applicationPackagePointcut() {
-        // Pointcut for application packages
+        // поинткаты для пакетов приложения
     }
 
     @Around("applicationPackagePointcut()")
