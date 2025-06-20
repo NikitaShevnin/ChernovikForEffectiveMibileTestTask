@@ -24,6 +24,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler({InvalidCardStatusException.class, InsufficientFundsException.class})
+    public ResponseEntity<ApiError> handleBadRequest(RuntimeException ex) {
+        log.warn("Business violation: {}", ex.getMessage());
+        ApiError error = new ApiError(LocalDateTime.now(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex) {
         log.error("Unhandled exception", ex);

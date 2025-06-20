@@ -2,6 +2,8 @@ package com.example.bankcards.service;
 
 import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.CardStatus;
+import com.example.bankcards.exception.InsufficientFundsException;
+import com.example.bankcards.exception.InvalidCardStatusException;
 import com.example.bankcards.repository.CardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -78,6 +80,7 @@ public class CardService {
 
     @Transactional
     public Card deposit(Card card, BigDecimal amount) {
+        validateActive(card);
         card.setBalance(card.getBalance().add(amount));
         Card saved = cardRepository.save(card);
         return saved;
@@ -85,6 +88,10 @@ public class CardService {
 
     @Transactional
     public Card withdraw(Card card, BigDecimal amount) {
+        validateActive(card);
+        if (card.getBalance().compareTo(amount) < 0) {
+            throw new InsufficientFundsException("Insufficient funds");
+        }
         card.setBalance(card.getBalance().subtract(amount));
         Card saved = cardRepository.save(card);
         return saved;
@@ -92,6 +99,11 @@ public class CardService {
 
     @Transactional
     public void transfer(Card from, Card to, BigDecimal amount) {
+        validateActive(from);
+        validateActive(to);
+        if (from.getBalance().compareTo(amount) < 0) {
+            throw new InsufficientFundsException("Insufficient funds");
+        }
         from.setBalance(from.getBalance().subtract(amount));
         to.setBalance(to.getBalance().add(amount));
         cardRepository.save(from);
@@ -101,5 +113,11 @@ public class CardService {
     @Transactional
     public void delete(Long id) {
         cardRepository.deleteById(id);
+    }
+
+    private void validateActive(Card card) {
+        if (card.getStatus() != CardStatus.ACTIVE) {
+            throw new InvalidCardStatusException("Card is not active");
+        }
     }
 }
