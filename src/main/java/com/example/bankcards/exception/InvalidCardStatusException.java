@@ -1,7 +1,7 @@
 package com.example.bankcards.exception;
 
 /**
- * Thrown when card status does not allow the requested operation.
+ * Выбрасывается, когда статус карты не позволяет выполнить запрошенную операцию.
  */
 public class InvalidCardStatusException extends RuntimeException {
     public InvalidCardStatusException(String message) {
