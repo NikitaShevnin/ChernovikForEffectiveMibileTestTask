@@ -6,6 +6,7 @@ import com.example.bankcards.repository.CardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,7 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
+    @Transactional
     public Card save(Card card) {
         Card saved = cardRepository.save(card);
         log.info("Saved card {}", card.getNumber());
@@ -62,6 +64,7 @@ public class CardService {
         return card;
     }
 
+    @Transactional
     public Card blockCard(Card card) {
         card.setStatus(CardStatus.BLOCKED);
         Card saved = cardRepository.save(card);
@@ -69,6 +72,7 @@ public class CardService {
         return saved;
     }
 
+    @Transactional
     public Card activateCard(Card card) {
         card.setStatus(CardStatus.ACTIVE);
         Card saved = cardRepository.save(card);
@@ -76,6 +80,7 @@ public class CardService {
         return saved;
     }
 
+    @Transactional
     public Card deposit(Card card, BigDecimal amount) {
         card.setBalance(card.getBalance().add(amount));
         Card saved = cardRepository.save(card);
@@ -83,6 +88,7 @@ public class CardService {
         return saved;
     }
 
+    @Transactional
     public Card withdraw(Card card, BigDecimal amount) {
         card.setBalance(card.getBalance().subtract(amount));
         Card saved = cardRepository.save(card);
@@ -90,6 +96,7 @@ public class CardService {
         return saved;
     }
 
+    @Transactional
     public void transfer(Card from, Card to, BigDecimal amount) {
         from.setBalance(from.getBalance().subtract(amount));
         to.setBalance(to.getBalance().add(amount));
@@ -98,6 +105,7 @@ public class CardService {
         log.info("Transferred {} from card {} to card {}", amount, from.getId(), to.getId());
     }
 
+    @Transactional
     public void delete(Long id) {
         cardRepository.deleteById(id);
         log.info("Deleted card {}", id);
