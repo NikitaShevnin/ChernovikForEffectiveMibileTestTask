@@ -9,8 +9,6 @@ import com.example.bankcards.entity.User;
 import com.example.bankcards.exception.ResourceNotFoundException;
 import com.example.bankcards.service.CardService;
 import com.example.bankcards.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 public class CardController {
     private final CardService cardService;
     private final UserService userService;
-    private static final Logger log = LoggerFactory.getLogger(CardController.class);
 
     public CardController(CardService cardService, UserService userService) {
         this.cardService = cardService;
@@ -39,7 +36,6 @@ public class CardController {
         java.util.List<CardDto> list = cardService.findAll().stream()
                 .map(CardDto::fromEntity)
                 .toList();
-        log.info("Retrieved {} cards", list.size());
         return list;
     }
 
@@ -54,7 +50,6 @@ public class CardController {
         card.setOwner(userService.findById(dto.getOwnerId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
         CardDto result = CardDto.fromEntity(cardService.save(card));
-        log.info("Created card {} for user {}", dto.getNumber(), dto.getOwnerId());
         return result;
     }
 
@@ -64,7 +59,6 @@ public class CardController {
         String username = userService.getCurrentUser().orElseThrow(() -> new ResourceNotFoundException("User not found")).getUsername();
         Page<CardDto> result = cardService.findByOwner(username, PageRequest.of(page, size))
                 .map(CardDto::fromEntity);
-        log.info("User {} requested their cards page {} size {}", username, page, size);
         return result;
     }
 
@@ -78,7 +72,6 @@ public class CardController {
                 ? cardService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Card not found"))
                 : cardService.findByIdAndOwner(id, current.getUsername())
                         .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
-        log.info("Retrieved card {}", id);
         return CardDto.fromEntity(card);
     }
 
@@ -90,7 +83,6 @@ public class CardController {
         Card to = cardService.findByIdAndOwner(dto.getToId(), username)
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
         cardService.transfer(from, to, dto.getAmount());
-        log.info("Transferred {} from card {} to card {} for user {}", dto.getAmount(), dto.getFromId(), dto.getToId(), username);
     }
 
     @PostMapping("/{id}/block")
@@ -104,7 +96,6 @@ public class CardController {
                 : cardService.findByIdAndOwner(id, current.getUsername())
                         .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
         CardDto result = CardDto.fromEntity(cardService.blockCard(card));
-        log.info("Blocked card {}", id);
         return result;
     }
 
@@ -115,7 +106,6 @@ public class CardController {
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
         AmountDto dto = new AmountDto();
         dto.setAmount(card.getBalance());
-        log.info("Checked balance for card {}", id);
         return dto;
     }
 
@@ -125,7 +115,6 @@ public class CardController {
         Card card = cardService.findByIdAndOwner(id, username)
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
         CardDto result = CardDto.fromEntity(cardService.deposit(card, dto.getAmount()));
-        log.info("Deposited {} to card {}", dto.getAmount(), id);
         return result;
     }
 
@@ -135,7 +124,6 @@ public class CardController {
         Card card = cardService.findByIdAndOwner(id, username)
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
         CardDto result = CardDto.fromEntity(cardService.withdraw(card, dto.getAmount()));
-        log.info("Withdrew {} from card {}", dto.getAmount(), id);
         return result;
     }
 
@@ -145,7 +133,6 @@ public class CardController {
         Card card = cardService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
         CardDto result = CardDto.fromEntity(cardService.activateCard(card));
-        log.info("Activated card {}", id);
         return result;
     }
 
@@ -153,6 +140,5 @@ public class CardController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable Long id) {
         cardService.delete(id);
-        log.info("Deleted card {}", id);
     }
 }
