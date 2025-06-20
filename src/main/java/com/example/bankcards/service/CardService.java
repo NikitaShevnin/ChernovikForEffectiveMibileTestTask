@@ -37,8 +37,13 @@ public class CardService {
         return list;
     }
 
-    public Page<Card> findByOwner(String username, Pageable pageable) {
-        Page<Card> page = cardRepository.findByOwnerUsername(username, pageable);
+    public Page<Card> findByOwner(String username, Pageable pageable, String search) {
+        Page<Card> page;
+        if (search == null || search.isBlank()) {
+            page = cardRepository.findByOwnerUsername(username, pageable);
+        } else {
+            page = cardRepository.findByOwnerUsernameAndNumberContaining(username, search, pageable);
+        }
         return page;
     }
 
