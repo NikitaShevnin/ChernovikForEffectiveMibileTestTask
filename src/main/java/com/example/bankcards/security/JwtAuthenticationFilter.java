@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.bankcards.security.AppUserDetailsService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -21,6 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
     private final AppUserDetailsService userDetailsService;
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, AppUserDetailsService userDetailsService) {
         this.tokenProvider = tokenProvider;
@@ -39,6 +42,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
+            log.info("Authenticated user {} via JWT", username);
+        } else {
+            log.debug("No JWT token provided");
         }
         filterChain.doFilter(request, response);
     }

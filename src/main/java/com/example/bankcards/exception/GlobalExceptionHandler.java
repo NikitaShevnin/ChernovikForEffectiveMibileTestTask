@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 
@@ -13,15 +15,18 @@ import java.time.LocalDateTime;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleNotFound(ResourceNotFoundException ex) {
+        log.warn("Resource not found: {}", ex.getMessage());
         ApiError error = new ApiError(LocalDateTime.now(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGeneric(Exception ex) {
+        log.error("Unhandled exception", ex);
         ApiError error = new ApiError(LocalDateTime.now(), "Internal server error");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
@@ -32,6 +37,7 @@ public class GlobalExceptionHandler {
                 .map(e -> e.getField() + " " + e.getDefaultMessage())
                 .findFirst().orElse("Validation error");
         ApiError error = new ApiError(LocalDateTime.now(), message);
+        log.warn("Validation error: {}", message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }
