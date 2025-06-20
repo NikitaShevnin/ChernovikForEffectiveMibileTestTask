@@ -1,11 +1,19 @@
-# Ignore IntelliJ IDEA files
+# IntelliJ IDEA files
 .idea/
 *.iml
 
-# Maven build directory
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# Maven build directories
 /target/
 
-# Log files
+# Build output
+out/
+
+# Logs
 *.log
 
 # MacOS files
