@@ -1,20 +1,20 @@
-# IntelliJ IDEA files
+# Файлы IntelliJ IDEA
 .idea/
 *.iml
 
-# Eclipse files
+# Файлы Eclipse
 .classpath
 .project
 .settings/
 
-# Maven build directories
+# Каталоги сборки Maven
 /target/
 
-# Build output
+# Результаты сборки
 out/
 
-# Logs
+# Логи
 *.log
 
-# MacOS files
+# Файлы MacOS
 .DS_Store

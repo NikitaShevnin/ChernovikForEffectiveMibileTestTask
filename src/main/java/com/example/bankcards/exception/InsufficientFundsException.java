@@ -1,7 +1,7 @@
 package com.example.bankcards.exception;
 
 /**
- * Thrown when there are not enough funds on the card for the operation.
+ * Выбрасывается, когда на карте недостаточно средств для выполнения операции.
  */
 public class InsufficientFundsException extends RuntimeException {
     public InsufficientFundsException(String message) {
