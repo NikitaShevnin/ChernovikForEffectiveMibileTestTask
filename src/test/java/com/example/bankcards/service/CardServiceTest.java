@@ -2,6 +2,8 @@ package com.example.bankcards.service;
 
 import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.CardStatus;
+import com.example.bankcards.exception.InsufficientFundsException;
+import com.example.bankcards.exception.InvalidCardStatusException;
 import com.example.bankcards.repository.CardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,6 +69,7 @@ class CardServiceTest {
     @Test
     void depositIncreasesBalanceAndPersists() {
         Card card = new Card();
+        card.setStatus(CardStatus.ACTIVE);
         card.setBalance(BigDecimal.valueOf(10));
         when(cardRepository.save(card)).thenReturn(card);
 
@@ -80,6 +83,7 @@ class CardServiceTest {
     @Test
     void withdrawDecreasesBalanceAndPersists() {
         Card card = new Card();
+        card.setStatus(CardStatus.ACTIVE);
         card.setBalance(BigDecimal.valueOf(10));
         when(cardRepository.save(card)).thenReturn(card);
 
@@ -93,8 +97,10 @@ class CardServiceTest {
     @Test
     void transferMovesMoneyBetweenCards() {
         Card from = new Card();
+        from.setStatus(CardStatus.ACTIVE);
         from.setBalance(BigDecimal.valueOf(20));
         Card to = new Card();
+        to.setStatus(CardStatus.ACTIVE);
         to.setBalance(BigDecimal.valueOf(5));
 
         cardService.transfer(from, to, BigDecimal.valueOf(10));
@@ -103,5 +109,26 @@ class CardServiceTest {
         assertEquals(BigDecimal.valueOf(15), to.getBalance());
         verify(cardRepository).save(from);
         verify(cardRepository).save(to);
+    }
+
+    @Test
+    void depositThrowsWhenCardNotActive() {
+        Card card = new Card();
+        card.setStatus(CardStatus.BLOCKED);
+
+        assertThrows(InvalidCardStatusException.class,
+                () -> cardService.deposit(card, BigDecimal.ONE));
+        verify(cardRepository, never()).save(any());
+    }
+
+    @Test
+    void withdrawThrowsForInsufficientFunds() {
+        Card card = new Card();
+        card.setStatus(CardStatus.ACTIVE);
+        card.setBalance(BigDecimal.ONE);
+
+        assertThrows(InsufficientFundsException.class,
+                () -> cardService.withdraw(card, BigDecimal.valueOf(5)));
+        verify(cardRepository, never()).save(any());
     }
 }
