@@ -32,6 +32,7 @@ public class CardController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public java.util.List<CardDto> all() {
         java.util.List<CardDto> list = cardService.findAll().stream()
                 .map(CardDto::fromEntity)

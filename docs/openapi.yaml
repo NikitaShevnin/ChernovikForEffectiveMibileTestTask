@@ -41,6 +41,7 @@ paths:
   /api/cards:
     get:
       summary: Получить все карты
+      description: Доступно только администраторам
       responses:
         "200":
           description: Список карт
