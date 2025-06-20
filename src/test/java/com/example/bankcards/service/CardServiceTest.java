@@ -135,11 +135,12 @@ class CardServiceTest {
                 () -> cardService.withdraw(card, BigDecimal.valueOf(5)));
         verify(cardRepository, never()).save(any());
 
+    @Test
     void findByOwnerUsesSearchWhenProvided() {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Card> page = new PageImpl<>(List.of(new Card()));
         when(cardRepository.findByOwnerUsernameAndNumberContaining("u", "123", pageable))
-                .thenReturn(page);
+            .thenReturn(page);
 
         Page<Card> result = cardService.findByOwner("u", pageable, "123");
 
@@ -151,7 +152,8 @@ class CardServiceTest {
     void findByOwnerWithoutSearchDelegatesSimpleQuery() {
         Pageable pageable = PageRequest.of(0, 5);
         Page<Card> page = new PageImpl<>(List.of(new Card()));
-        when(cardRepository.findByOwnerUsername("u", pageable)).thenReturn(page);
+        when(cardRepository.findByOwnerUsername("u", pageable))
+            .thenReturn(page);
 
         Page<Card> result = cardService.findByOwner("u", pageable, null);
 
