@@ -1,6 +1,7 @@
 package com.example.bankcards.entity;
 
 import jakarta.persistence.*;
+import com.example.bankcards.converter.CardNumberEncryptConverter;
 import java.util.Objects;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ public class Card {
     private Long version;
 
     @Column(nullable = false, unique = true)
+    @Convert(converter = CardNumberEncryptConverter.class)
     private String number;
 
     @ManyToOne(fetch = FetchType.LAZY)
