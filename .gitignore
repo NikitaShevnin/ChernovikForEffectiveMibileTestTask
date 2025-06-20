@@ -1,0 +1,12 @@
+# Ignore IntelliJ IDEA files
+.idea/
+*.iml
+
+# Maven build directory
+/target/
+
+# Log files
+*.log
+
+# MacOS files
+.DS_Store
