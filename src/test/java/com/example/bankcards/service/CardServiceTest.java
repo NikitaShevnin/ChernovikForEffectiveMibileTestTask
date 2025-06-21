@@ -135,6 +135,8 @@ class CardServiceTest {
                 () -> cardService.withdraw(card, BigDecimal.valueOf(5)));
         verify(cardRepository, never()).save(any());
 
+    }
+
     @Test
     void findByOwnerUsesSearchWhenProvided() {
         Pageable pageable = PageRequest.of(0, 10);
