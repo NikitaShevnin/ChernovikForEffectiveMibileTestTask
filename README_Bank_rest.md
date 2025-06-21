@@ -5,15 +5,19 @@ REST API для работы с банковскими картами. Серв�
 ## Запуск приложения
 
 1. Установите Docker и Docker Compose.
-2. Поднимите базу данных командой:
+2. Создайте каталог `secrets` и положите туда файлы с секретами:
    ```bash
-   docker-compose up -d
+   mkdir -p secrets
+   echo "strong_db_pass" > secrets/db_password
+   echo "$(openssl rand -hex 32)" > secrets/jwt_secret
+   echo "admin" > secrets/admin_user
+   echo "admin_pass" > secrets/admin_password
    ```
-3. Соберите и запустите приложение:
+3. Поднимите сервисы командой:
    ```bash
-   mvn spring-boot:run
+   docker compose up --build -d
    ```
-   При старте автоматически выполняются Liquibase‑миграции.
+   При запуске приложение автоматически применит Liquibase‑миграции и создаст администратора из секретов.
 4. Откройте [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) для просмотра документации API.
 
 ## Получение JWT токена
@@ -31,7 +35,29 @@ REST API для работы с банковскими картами. Серв�
    В ответе будет JSON вида `{"token":"<JWT>"}`. Передавайте значение в заголовке:
 
    ```
-   Authorization: Bearer <JWT>
+  Authorization: Bearer <JWT>
+   ```
+
+## Вход под администратором и проверка API
+
+1. Получите токен администратора:
+   ```bash
+   ADMIN_TOKEN=$(curl -s \
+     "http://localhost:8080/api/auth/login?username=$(cat secrets/admin_user)&password=$(cat secrets/admin_password)" \
+     | jq -r .token)
+   ```
+2. В Swagger UI нажмите **Authorize** и введите `Bearer $ADMIN_TOKEN`.
+3. Или выполняйте запросы с помощью `curl`:
+   ```bash
+   curl -H "Authorization: Bearer $ADMIN_TOKEN" http://localhost:8080/api/cards
+   ```
+   Это вернёт список карт (изначально пустой).
+4. Создайте пользователя через API администратора:
+   ```bash
+   curl -X POST http://localhost:8080/api/users \
+        -H "Authorization: Bearer $ADMIN_TOKEN" \
+        -H 'Content-Type: application/json' \
+        -d '{"username":"test","password":"secret"}'
    ```
 
 ## Основные эндпоинты

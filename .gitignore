@@ -16,5 +16,8 @@ out/
 # Логи
 *.log
 
+# Секреты для docker-compose
+secrets/
+
 # Файлы MacOS
 .DS_Store
