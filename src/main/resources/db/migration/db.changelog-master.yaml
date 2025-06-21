@@ -87,3 +87,15 @@ databaseChangeLog:
         - sql: CREATE EXTENSION IF NOT EXISTS pgcrypto;
         - sql: |
             UPDATE cards SET number = encode(pgp_sym_encrypt(number, 'MySecretKey12345'), 'base64');
+
+  - changeSet:
+      id: 3
+      author: add_version
+      changes:
+        - addColumn:
+            tableName: cards
+            columns:
+              - column:
+                  name: version
+                  type: BIGINT
+
