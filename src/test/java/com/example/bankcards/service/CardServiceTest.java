@@ -134,6 +134,7 @@ class CardServiceTest {
         assertThrows(InsufficientFundsException.class,
                 () -> cardService.withdraw(card, BigDecimal.valueOf(5)));
         verify(cardRepository, never()).save(any());
+    }
 
     @Test
     void findByOwnerUsesSearchWhenProvided() {
