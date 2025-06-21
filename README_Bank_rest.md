@@ -60,3 +60,29 @@ REST API для работы с банковскими картами. Серв�
 
 По умолчанию приложение слушает порт `8080`.
 
+## Передача секретов
+
+Пароль базы данных и ключ JWT можно передать через переменные окружения или Docker Secrets.
+
+**Через переменные окружения**:
+
+```bash
+export POSTGRES_PASSWORD=strongpass
+export DB_PASSWORD=$POSTGRES_PASSWORD
+export JWT_SECRET=my_jwt_secret
+docker-compose up -d
+mvn spring-boot:run
+```
+
+**Через Docker Secrets** (Docker Swarm):
+
+```bash
+echo "strongpass" > db_password.txt
+echo "my_jwt_secret" > jwt_secret.txt
+docker secret create db_password db_password.txt
+docker secret create jwt_secret jwt_secret.txt
+POSTGRES_PASSWORD=$(cat db_password.txt) DB_PASSWORD=$(cat db_password.txt) JWT_SECRET=$(cat jwt_secret.txt) \
+  docker-compose up -d
+mvn spring-boot:run
+```
+
