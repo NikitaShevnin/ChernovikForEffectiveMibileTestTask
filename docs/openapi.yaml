@@ -118,6 +118,18 @@ paths:
       responses:
         "200":
           description: Карта заблокирована
+  /api/cards/{id}/activate:
+    post:
+      summary: Активация карты
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Карта активирована
   /api/cards/transfer:
     post:
       summary: Перевод между картами пользователя
