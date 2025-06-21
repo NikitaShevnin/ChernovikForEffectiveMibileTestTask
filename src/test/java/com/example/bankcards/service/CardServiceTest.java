@@ -136,6 +136,8 @@ class CardServiceTest {
         verify(cardRepository, never()).save(any());
     }
 
+    }
+
     @Test
     void findByOwnerUsesSearchWhenProvided() {
         Pageable pageable = PageRequest.of(0, 10);
