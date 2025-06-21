@@ -21,3 +21,6 @@ secrets/
 
 # Файлы MacOS
 .DS_Store
+
+/secrets/*
+!/.gitignore
